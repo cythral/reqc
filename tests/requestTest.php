@@ -24,4 +24,7 @@ class testRequest extends TestCase {
 		$this->assertEquals("application/json", $resp->headers["content-type"]);
 	}
 
+
+	public function testPostRequest() {
+	}
 }
