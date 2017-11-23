@@ -14,7 +14,7 @@ class Request {
 	public $attempts = 0;
 	public $response;
 
-	private const REQUIRED_OPTIONS = [
+	const REQUIRED_OPTIONS = [
 		"url",
 		"method"
 	];
