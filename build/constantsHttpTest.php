@@ -1,5 +1,5 @@
 <?php
 
 include dirname(__DIR__)."/constants.php";
-header("application/json");
+header("Content-Type: application/json");
 die(json_encode(["HOST" => reqc\HOST]));

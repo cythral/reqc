@@ -53,6 +53,3 @@ if(TYPE == TYPES["HTTP"]) {
 } else {
 
 }
-
-
-echo IP;
