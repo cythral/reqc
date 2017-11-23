@@ -1,5 +1,6 @@
 {
 	"name" : "cythral/reqc",
+	"type" : "library",
 	"description" : "A simple HTTP request library",
 	"license" : "GPL-3.0",
 	"author" : {
