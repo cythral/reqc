@@ -2,11 +2,7 @@
 
 namespace reqc;
 
-if(!defined("REQC")) die;
-
-require_once ROOT."/response.php";
-
-class Request {
+class request {
 	private $options;
 	private $ch;
 	
@@ -44,7 +40,7 @@ class Request {
 
 		if(isset($this->options["data"])) curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->options["data"]);
 		if(isset($this->options["headers"])) curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->options["headers"]);
-		$this->response = new Response(curl_exec($this->ch));
+		$this->response = new response(curl_exec($this->ch));
 		curl_close($this->ch);
 
 		if($this->response->code == 429) sleep((Integer)$this->response->headers["retry-after"]);

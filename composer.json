@@ -1,0 +1,14 @@
+{
+	"name" : "Cythral/reqc",
+	"description" : "A simple HTTP request library",
+	"license" : "GPL-3.0",
+	"author" : {
+		"name" : "Cythral",
+		"email" : "talen@cythral.com"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"reqc\\" : "src/"
+		}
+	}
+}

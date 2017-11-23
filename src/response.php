@@ -2,9 +2,7 @@
 
 namespace reqc;
 
-if(!defined("REQC")) die;
-
-class Response {
+class response {
 	private $data;
 	
 	public $body;
