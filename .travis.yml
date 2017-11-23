@@ -1,12 +1,12 @@
 language: php
 
 php:
-  	- '7.0'
-  	- '7.1'
+  - '7.0'
+  - '7.1'
 
 script:
-	- php build.php
-	- phpunit
+  - php build.php
+  - phpunit
 
 deploy:
   provider: releases
