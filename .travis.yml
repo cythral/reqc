@@ -28,7 +28,7 @@ after_failure:
   - wget https://raw.githubusercontent.com/snkrsnkampa/travis-ci-discord-webhook/master/send.sh
   - chmod +x send.sh
   - ./send.sh failure
- addons:
+addons:
   hosts:
     - sd1.localhost
     - sd2.sd1.localhost
