@@ -29,6 +29,8 @@ class constantsTest extends TestCase {
 		$this->assertEquals("/build/constantsHttpTest.php", $constants["reqc\\PATH"]);
 		$this->assertEquals(false, $constants["reqc\\H2PUSH"]);
 		$this->assertFalse(isset($constants["reqc\\SUBDOMAIN"]));
+		$this->assertFalse(isset($constants["reqc\\DOMAIN"]));
+		$this->assertFalse(isset($constants["reqc\\TLD"]));
 	}
 
 	public function testHttpConstantsLocalhost() {
@@ -56,6 +58,8 @@ class constantsTest extends TestCase {
 		$this->assertEquals("constantsHttpTest.php", $constants["reqc\\FILE"]);
 		$this->assertEquals("/build/constantsHttpTest.php", $constants["reqc\\PATH"]);
 		$this->assertEquals(false, $constants["reqc\\H2PUSH"]);
-		$this->assertEquals("main", $constants["reqc\\SUBDOMAIN"]);
+		$this->assertFalse(isset($constants["reqc\\SUBDOMAIN"]));
+		$this->assertFalse(isset($constants["reqc\\DOMAIN"]));
+		$this->assertEquals("localhost", $constants["reqc\\TLD"]);
 	}
 }

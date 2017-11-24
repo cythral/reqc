@@ -47,8 +47,13 @@ if(TYPE == TYPES["HTTP"]) {
 	define("reqc\PATH", $directory."/".$filename.((isset($extension)) ? ".".$extension : ""));
 	define("reqc\H2PUSH", (bool)($_SERVER["H2PUSH"] ?? false));
 
-	if(!filter_var(HOST, \FILTER_VALIDATE_IP)) 
-		define("reqc\SUBDOMAIN", (count($domainParts) == 2) ? "main" : implode(".", array_slice($domainParts, 2)));// CLI Constants
+	if(!filter_var(HOST, \FILTER_VALIDATE_IP)) {
+		define("reqc\TLD", $domainParts[0]);
+		if(count($domainParts) >= 2) define("reqc\DOMAIN", $domainParts[1]);
+		if(count($domainParts) > 2) define("reqc\SUBDOMAIN", implode(".", array_slice($domainParts, 2)));
+	}
+
+// CLI Constants
 } else {
 
 }
