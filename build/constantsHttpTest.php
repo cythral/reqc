@@ -2,4 +2,11 @@
 
 include dirname(__DIR__)."/src/constants.php";
 header("Content-Type: application/json");
-die(json_encode(["HOST" => reqc\HOST]));
+
+$constants = get_defined_constants(true)["user"];
+$list = [];
+foreach($constants as $key => $val) {
+	if(substr($key, 0, 5) == "reqc\\") $list[$key] = $val;
+}
+
+die(json_encode($list));
