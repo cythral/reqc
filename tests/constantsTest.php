@@ -56,6 +56,6 @@ class constantsTest extends TestCase {
 		$this->assertEquals("constantsHttpTest.php", $constants["reqc\\FILE"]);
 		$this->assertEquals("/build/constantsHttpTest.php", $constants["reqc\\PATH"]);
 		$this->assertEquals(false, $constants["reqc\\H2PUSH"]);
-		$this->assertFalse("main", $constants["reqc\\SUBDOMAIN"]);
+		$this->assertEquals("main", $constants["reqc\\SUBDOMAIN"]);
 	}
 }
