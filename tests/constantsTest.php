@@ -19,7 +19,7 @@ class constantsTest extends TestCase {
 		$this->assertEquals("127.0.0.1", $constants["reqc\\HOST"]);
 		$this->assertEquals("GET", $constants["reqc\\METHOD"]);
 		$this->assertEquals("127.0.0.1", $constants["reqc\\BASEURL"]);
-		$this->assertEquals("http://127.0.0.1/build/constantsHttpTest.php");
+		$this->assertEquals("http://127.0.0.1/build/constantsHttpTest.php", $constants["reqc\\FULLURL"]);
 		$this->assertEquals("/build/constantsHttpTest.php", $constants["reqc\\URI"]);
 		$this->assertEquals(2, $constants["reqc\\SUBTYPE"]);
 		$this->assertEquals("/build", $constants["reqc\\DIRECTORY"]);
