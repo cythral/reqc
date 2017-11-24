@@ -10,6 +10,14 @@
 	"autoload" : {
 		"psr-4" : {
 			"reqc\\" : "src/"
-		}
+		},
+
+		"files" : [
+			"src/constants.php"
+		],
+
+		"exclude-from-classmap" : [
+			"/src/constants.php"
+		]
 	}
 }
