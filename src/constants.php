@@ -39,7 +39,6 @@ if(TYPE == TYPES["HTTP"]) {
 	define("reqc\BASEURL", $_SERVER["SERVER_NAME"]);
 	define("reqc\FULLURL", (SSL ? "https://" : "http://").$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
 	define("reqc\URI", strtok($_SERVER["REQUEST_URI"], "?"));
-	define("reqc\SUBDOMAIN", (count($domainParts) == 2) ? "main" : implode(".", array_slice($domainParts, 2)));
 	define("reqc\SUBTYPE", (isset($extension) && !in_array($extension, ["html", "php"])) ? TYPES["ASSET"] : TYPES["PAGE"]);
 	define("reqc\DIRECTORY", $directory);
 	define("reqc\FILENAME", $filename);
@@ -48,8 +47,8 @@ if(TYPE == TYPES["HTTP"]) {
 	define("reqc\PATH", $directory."/".$filename.((isset($extension)) ? ".".$extension : ""));
 	define("reqc\H2PUSH", (bool)($_SERVER["H2PUSH"] ?? false));
 
-
-// CLI Constants
+	if(!filter_var(HOST, \FILTER_VALIDATE_IP)) 
+		define("reqc\SUBDOMAIN", (count($domainParts) == 2) ? "main" : implode(".", array_slice($domainParts, 2)));// CLI Constants
 } else {
 
 }

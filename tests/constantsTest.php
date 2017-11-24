@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 
 class constantsTest extends TestCase {
-	public function testConstantsIp() {
+	public function testHttpConstantsIp() {
 		$req = new reqc\request([
 			"url" => "http://127.0.0.1/build/constantsHttpTest.php",
 			"method" => "GET"
@@ -28,5 +28,6 @@ class constantsTest extends TestCase {
 		$this->assertEquals("constantsHttpTest.php", $constants["reqc\\FILE"]);
 		$this->assertEquals("/build/constantsHttpTest.php", $constants["reqc\\PATH"]);
 		$this->assertEquals(false, $constants["reqc\\H2PUSH"]);
+		$this->assertFalse(isset($constants["reqc\\SUBDOMAIN"]));
 	}
 }
