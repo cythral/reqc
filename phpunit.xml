@@ -1,5 +1,6 @@
 <phpunit bootstrap="tests/setup.php">
 	<testsuite name="reqctests">
-		<directory>tests/</directory>
+		<file>tests/requestTest.php</file>
+		<file>tests/constantsTest.php</file>
 	</testsuite>
 </phpunit>
