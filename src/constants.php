@@ -51,7 +51,7 @@ if(TYPE == TYPES["HTTP"]) {
 		define("reqc\TLD", $domainParts[0]);
 		if(count($domainParts) >= 2) define("reqc\DOMAIN", $domainParts[1]);
 		if(count($domainParts) > 2) define("reqc\SUBDOMAIN", implode(".", array_slice($domainParts, 2)));
-	}
+	} else define("reqc\HOSTISIP", true);
 
 // CLI Constants
 } else {
