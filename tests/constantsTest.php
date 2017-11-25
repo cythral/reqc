@@ -126,4 +126,9 @@ class constantsTest extends TestCase {
 		$this->assertEquals("localhost", $constants["reqc\\TLD"]);
 		$this->assertFalse(isset($constants["reqc\\HOSTISIP"]));
 	}
+
+	public function testCliConstants() {
+		$this->assertEquals([], reqc\VARS);
+		$this->assertEquals(["build/constantsCliTest.php" => true, "--test" => "true"], json_decode(shell_exec("php build/constantsCliTest.php --test=true"), true));
+	}
 }

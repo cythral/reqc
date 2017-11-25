@@ -7,7 +7,7 @@ class testRequest extends TestCase {
 	public function testGetRequest() {
 
 		$req = new reqc\request([
-			"url" => "http://api.phroses.com/reqc-get-test",
+			"url" => "http://localhost/build/requestGetTest.php",
 			"method" => "GET"
 		]);
 
@@ -16,15 +16,11 @@ class testRequest extends TestCase {
 		$this->assertInstanceOf(reqc\request::class, $req);
 		$this->assertTrue($req->done);
 		$this->assertEquals(1, $req->attempts);
-		$this->assertEquals('{"hello":true}', (String)$req);
 		
 		$this->assertInstanceOf(reqc\response::class, $resp);
 		$this->assertEquals(200, $resp->code);
-		$this->assertEquals('{"hello":true}', $resp->body);
-		$this->assertEquals("application/json", $resp->headers["content-type"]);
-	}
-
-
-	public function testPostRequest() {
+		$this->assertEquals('hello world', (String)$req);
+		$this->assertEquals('hello world', $resp->body);
+		$this->assertEquals("text/plain", $resp->headers["content-type"]);
 	}
 }

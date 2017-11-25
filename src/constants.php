@@ -33,7 +33,6 @@ if(TYPE == TYPES["HTTP"]) {
 	define("reqc\USERAGENT", $_SERVER["HTTP_USER_AGENT"] ?? null);
 	define("reqc\ACCEPT", explode(",", ($_SERVER["HTTP_ACCEPT"] ?? '')));
 	define("reqc\PORT", (int)$_SERVER['SERVER_PORT']);
-	define("reqc\VARS", $_REQUEST);
 	define("reqc\HOST", strtok($_SERVER["HTTP_HOST"], ":"));
 	define("reqc\METHOD", strtoupper($_SERVER['REQUEST_METHOD']));
 	define("reqc\BASEURL", $_SERVER["SERVER_NAME"]);
@@ -56,4 +55,14 @@ if(TYPE == TYPES["HTTP"]) {
 // CLI Constants
 } else {
 
+	if(isset($argv) && count($argv) > 0) {
+		foreach ($argv as $arg) {
+	    	$e = explode("=",$arg);
+	    	
+	    	if(count($e) == 2) $_REQUEST[$e[0]] = $e[1];
+	    	else $_REQUEST[$e[0]] = true;
+	    }
+	}
 }
+
+define("reqc\VARS", $_REQUEST);
