@@ -1,6 +1,6 @@
 <phpunit bootstrap="vendor/autoload.php">
 	<testsuite name="reqctests">
-		<file>tests/requestTest.php</file>
-		<file>tests/constantsTest.php</file>
+		<file>tests/RequestTest.php</file>
+		<file>tests/ConstantsTest.php</file>
 	</testsuite>
 </phpunit>

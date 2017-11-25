@@ -2,16 +2,18 @@
 
 namespace reqc;
 
-class response {
+class Response {
 	private $data;
-	
+	private $json;
+
 	public $body;
 	public $headers = [];
 	public $code;
 	public $httpVersion;
 
-	public function __construct($data) {
+	public function __construct($data, $json = false) {
 		$this->data = $data;
+		$this->json = $json;
 		$this->parse();
 	}
 
@@ -38,6 +40,11 @@ class response {
 			$this->headers["content-type"] = strtok($this->headers["content-type"], ";");
 			if(!isset($this->headers["charset"])) $this->headers["charset"] = substr(strstr(strtok(";"), "="), 1);
 		}
+
+		if($this->json && strtolower($this->headers["content-type"]) == "application/json") {
+			$this->body = json_decode($this->body);
+		}
+
 		unset($this->data, $head, $lead);
 	}
 

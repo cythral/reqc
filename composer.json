@@ -13,11 +13,11 @@
 		},
 
 		"files" : [
-			"src/constants.php"
+			"src/reqc.php"
 		],
 
 		"exclude-from-classmap" : [
-			"/src/constants.php"
+			"/src/reqc.php"
 		]
 	}
 }
