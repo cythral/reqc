@@ -1,12 +1,18 @@
 {
 	"name" : "cythral/reqc",
 	"type" : "library",
-	"description" : "A simple HTTP request library",
+	"description" : "A library for handling incoming and outgoing requests.",
 	"license" : "GPL-3.0",
 	"author" : {
 		"name" : "Cythral",
 		"email" : "talen@cythral.com"
 	},
+
+	"require" : {
+		"php" : ">=7.0",
+		"ext-curl" : "*"
+	},
+
 	"autoload" : {
 		"psr-4" : {
 			"reqc\\" : "src/"
