@@ -33,6 +33,11 @@ class response {
 			$this->headers[strtolower(strstr($line, ":", true))] = trim(substr(strstr($line, ":"), 2));
 		}
 
+		// fix content type header
+		if(isset($this->headers["content-type"]) && strpos($this->headers["content-type"], ";")) {
+			$this->headers["content-type"] = strtok($this->headers["content-type"], ";");
+			$this->headers["charset"] = substr(strstr(strtok(";"), "="), 1);
+		}
 		unset($this->data, $head, $lead);
 	}
 
