@@ -38,7 +38,7 @@ class request {
 		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($this->ch, CURLOPT_HEADER, true);
 
-		if(isset($this->options["data"])) curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->options["data"]);
+		if(isset($this->options["data"])) curl_setopt($this->ch, CURLOPT_POSTFIELDS, http_build_query($this->options["data"]));
 		if(isset($this->options["headers"])) curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->options["headers"]);
 		$this->response = new response(curl_exec($this->ch));
 		curl_close($this->ch);
