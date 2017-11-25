@@ -60,9 +60,7 @@ class Request {
 			curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->options["data"]);
 		}
 		
-		
-		
-		$this->response = new Response(curl_exec($this->ch));
+		$this->response = new Response(curl_exec($this->ch), $this->options["json"] ?? false);
 		curl_close($this->ch);
 
 		if($this->response->code == 429) sleep((Integer)$this->response->headers["retry-after"]);
