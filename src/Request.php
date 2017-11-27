@@ -49,7 +49,7 @@ class Request {
 
 			// json encoded if json
 			if(isset($this->options["headers"]["content-type"]) &&
-				 strtolower($this->options["headers"]["content-type"] == "application/json") {
+				 strtolower($this->options["headers"]["content-type"]) == "application/json") {
 					 $this->options["data"] = json_encode($this->options["data"]);
 			}
 		}
