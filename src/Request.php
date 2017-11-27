@@ -38,15 +38,15 @@ class Request {
 
 	private function execute() {
 		$this->attempts++;
-		$this->ch = curl_init($this->options["url"]);
+		$this->con = new Curl($this->options["url"]);
 
-		curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, $this->options["method"]);
-		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($this->ch, CURLOPT_HEADER, true);
+		$this->con->setOpt(CURLOPT_CUSTOMREQUEST, $this->options["method"]);
+		$this->con->setOpt(CURLOPT_RETURNTRANSFER, true);
+		$this->con->setOpt(CURLOPT_HEADER, true);
 
 		if(isset($this->options["headers"])) {
 			$this->options["headers"] = array_change_key_case($this->options["headers"]);
-			curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->options["headers"]);
+			$this->con->setOpt(CURLOPT_HTTPHEADER, $this->options["headers"]);
 		}
 
 
@@ -61,11 +61,11 @@ class Request {
 				$this->options["data"] = json_encode($this->options["data"]);
 			}
 
-			curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->options["data"]);
+			$this->con->setOpt(CURLOPT_POSTFIELDS, $this->options["data"]);
 		}
 
-		$this->response = new Response(curl_exec($this->ch), $this->options["json"] ?? false);
-		curl_close($this->ch);
+		$this->response = new Response($this->con->exec(), $this->options["json"] ?? false);
+		unset($this->con);
 
 		if($this->response->code == 429) sleep((Integer)$this->response->headers["retry-after"]);
 		else $this->done = true;
