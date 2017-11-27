@@ -5,7 +5,7 @@ namespace reqc;
 class Request {
 	private $options;
 	private $ch;
-	
+
 	public $done = false;
 	public $attempts = 0;
 	public $response;
@@ -51,15 +51,19 @@ class Request {
 
 
 		if(isset($this->options["data"])) {
-			if(!isset($this->options["headers"]["content-type"]) || 
+			if(!isset($this->options["headers"]["content-type"]) ||
 				strtolower($this->options["headers"]["content-type"]) != "application/json") {
 
 				$this->options["data"] = http_build_query($this->options["data"]);
 			}
 
+			if(isset($this->options["headers"]["content-type"]) && $this->options["headers"]["content-type"] == "application/json") {
+				$this->options["data"] = json_encode($this->options["data"]);
+			}
+
 			curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->options["data"]);
 		}
-		
+
 		$this->response = new Response(curl_exec($this->ch), $this->options["json"] ?? false);
 		curl_close($this->ch);
 
