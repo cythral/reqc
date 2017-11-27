@@ -11,7 +11,7 @@ class Request {
 	public $attempts = 0;
 	public $response;
 
-	static const REQUIRED_OPTIONS = [
+	const REQUIRED_OPTIONS = [
 		"url",
 		"method"
 	];
@@ -62,7 +62,7 @@ class Request {
 		$this->con->setOpt(CURLOPT_CUSTOMREQUEST, $this->options["method"]);
 		$this->con->setOpt(CURLOPT_RETURNTRANSFER, true);
 		$this->con->setOpt(CURLOPT_HEADER, true);
-		
+
 		if(isset($this->options["headers"])) $this->con->setOpt(CURLOPT_HTTPHEADER, $this->options["headers"]);
 		if(isset($this->options["data"])) $this->con->setOpt(CURLOPT_POSTFIELDS, $this->options["data"]);
 
