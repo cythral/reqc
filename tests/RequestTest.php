@@ -3,11 +3,11 @@
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase {
-	
+
 	public function testGetRequest() {
 
 		$req = new reqc\Request([
-			"url" => "http://localhost/build/requestGetTest.php",
+			"url" => "http://reqc/build/requestGetTest.php",
 			"method" => "GET"
 		]);
 
@@ -25,7 +25,7 @@ class RequestTest extends TestCase {
 
 	public function testPostRequest() {
 		$req = new reqc\Request([
-			"url" => "http://localhost/build/requestPostTest.php",
+			"url" => "http://reqc/build/requestPostTest.php",
 			"method" => "POST",
 			"data" => [
 				"foo" => "bar"

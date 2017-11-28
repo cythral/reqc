@@ -36,7 +36,7 @@ class ConstantsTest extends TestCase {
 
 	public function testHttpConstantsLocalhost() {
 		$req = new reqc\Request([
-			"url" => "http://localhost/build/constantsHttpTest.php",
+			"url" => "http://reqc/build/constantsHttpTest.php",
 			"method" => "GET"
 		]);
 
@@ -47,10 +47,10 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(["*/*"], $constants["reqc\\ACCEPT"]);
 		$this->assertEquals(80, $constants["reqc\\PORT"]);
 		$this->assertEquals([], $constants["reqc\\VARS"]);
-		$this->assertEquals("localhost", $constants["reqc\\HOST"]);
+		$this->assertEquals("reqc", $constants["reqc\\HOST"]);
 		$this->assertEquals("GET", $constants["reqc\\METHOD"]);
-		$this->assertEquals("localhost", $constants["reqc\\BASEURL"]);
-		$this->assertEquals("http://localhost/build/constantsHttpTest.php", $constants["reqc\\FULLURL"]);
+		$this->assertEquals("reqc", $constants["reqc\\BASEURL"]);
+		$this->assertEquals("http://reqc/build/constantsHttpTest.php", $constants["reqc\\FULLURL"]);
 		$this->assertEquals("/build/constantsHttpTest.php", $constants["reqc\\URI"]);
 		$this->assertEquals(2, $constants["reqc\\SUBTYPE"]);
 		$this->assertEquals("/build", $constants["reqc\\DIRECTORY"]);
@@ -61,13 +61,13 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(false, $constants["reqc\\H2PUSH"]);
 		$this->assertFalse(isset($constants["reqc\\SUBDOMAIN"]));
 		$this->assertFalse(isset($constants["reqc\\DOMAIN"]));
-		$this->assertEquals("localhost", $constants["reqc\\TLD"]);
+		$this->assertEquals("reqc", $constants["reqc\\TLD"]);
 		$this->assertFalse(isset($constants["reqc\\HOSTISIP"]));
 	}
 
 	public function testHttpConstantsLocalhostSd1() {
 		$req = new reqc\Request([
-			"url" => "http://sd1.localhost/build/constantsHttpTest.php",
+			"url" => "http://sd1.reqc/build/constantsHttpTest.php",
 			"method" => "GET"
 		]);
 
@@ -78,10 +78,10 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(["*/*"], $constants["reqc\\ACCEPT"]);
 		$this->assertEquals(80, $constants["reqc\\PORT"]);
 		$this->assertEquals([], $constants["reqc\\VARS"]);
-		$this->assertEquals("sd1.localhost", $constants["reqc\\HOST"]);
+		$this->assertEquals("sd1.reqc", $constants["reqc\\HOST"]);
 		$this->assertEquals("GET", $constants["reqc\\METHOD"]);
-		$this->assertEquals("sd1.localhost", $constants["reqc\\BASEURL"]);
-		$this->assertEquals("http://sd1.localhost/build/constantsHttpTest.php", $constants["reqc\\FULLURL"]);
+		$this->assertEquals("sd1.reqc", $constants["reqc\\BASEURL"]);
+		$this->assertEquals("http://sd1.reqc/build/constantsHttpTest.php", $constants["reqc\\FULLURL"]);
 		$this->assertEquals("/build/constantsHttpTest.php", $constants["reqc\\URI"]);
 		$this->assertEquals(2, $constants["reqc\\SUBTYPE"]);
 		$this->assertEquals("/build", $constants["reqc\\DIRECTORY"]);
@@ -92,13 +92,13 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(false, $constants["reqc\\H2PUSH"]);
 		$this->assertFalse(isset($constants["reqc\\SUBDOMAIN"]));
 		$this->assertEquals("sd1", $constants["reqc\\DOMAIN"]);
-		$this->assertEquals("localhost", $constants["reqc\\TLD"]);
+		$this->assertEquals("reqc", $constants["reqc\\TLD"]);
 		$this->assertFalse(isset($constants["reqc\\HOSTISIP"]));
 	}
 
 	public function testHttpConstantsLocalhostSd2() {
 		$req = new reqc\Request([
-			"url" => "http://sd2.sd1.localhost/build/constantsHttpTest.php",
+			"url" => "http://sd2.sd1.reqc/build/constantsHttpTest.php",
 			"method" => "GET"
 		]);
 
@@ -109,10 +109,10 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(["*/*"], $constants["reqc\\ACCEPT"]);
 		$this->assertEquals(80, $constants["reqc\\PORT"]);
 		$this->assertEquals([], $constants["reqc\\VARS"]);
-		$this->assertEquals("sd2.sd1.localhost", $constants["reqc\\HOST"]);
+		$this->assertEquals("sd2.sd1.reqc", $constants["reqc\\HOST"]);
 		$this->assertEquals("GET", $constants["reqc\\METHOD"]);
-		$this->assertEquals("sd2.sd1.localhost", $constants["reqc\\BASEURL"]);
-		$this->assertEquals("http://sd2.sd1.localhost/build/constantsHttpTest.php", $constants["reqc\\FULLURL"]);
+		$this->assertEquals("sd2.sd1.reqc", $constants["reqc\\BASEURL"]);
+		$this->assertEquals("http://sd2.sd1.reqc/build/constantsHttpTest.php", $constants["reqc\\FULLURL"]);
 		$this->assertEquals("/build/constantsHttpTest.php", $constants["reqc\\URI"]);
 		$this->assertEquals(2, $constants["reqc\\SUBTYPE"]);
 		$this->assertEquals("/build", $constants["reqc\\DIRECTORY"]);
@@ -123,7 +123,7 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(false, $constants["reqc\\H2PUSH"]);
 		$this->assertEquals("sd2", $constants["reqc\\SUBDOMAIN"]);
 		$this->assertEquals("sd1", $constants["reqc\\DOMAIN"]);
-		$this->assertEquals("localhost", $constants["reqc\\TLD"]);
+		$this->assertEquals("reqc", $constants["reqc\\TLD"]);
 		$this->assertFalse(isset($constants["reqc\\HOSTISIP"]));
 	}
 

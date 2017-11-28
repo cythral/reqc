@@ -30,5 +30,6 @@ after_failure:
   - ./send.sh failure
 addons:
   hosts:
-    - sd1.localhost
-    - sd2.sd1.localhost
+    - reqc
+    - sd1.reqc
+    - sd2.sd1.reqc
