@@ -56,8 +56,6 @@ class RequestTest extends TestCase {
 		$expectedBody = new stdClass;
 		$expectedBody->foo = "bar";
 
-		var_dump($body);
-
 		$this->assertTrue($req->done);
 		$this->assertEquals(1, $req->attempts);
 		$this->assertInstanceOf(reqc\Response::class, $resp);
