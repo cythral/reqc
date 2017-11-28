@@ -35,7 +35,7 @@ class Response {
 			$this->headers[strtolower(strstr($line, ":", true))] = trim(substr(strstr($line, ":"), 2));
 		}
 
-		// fix content type header
+		// fix content type header, move charset to its own if present
 		if(isset($this->headers["content-type"]) && strpos($this->headers["content-type"], ";")) {
 			$this->headers["content-type"] = strtok($this->headers["content-type"], ";");
 			if(!isset($this->headers["charset"])) $this->headers["charset"] = substr(strstr(strtok(";"), "="), 1);

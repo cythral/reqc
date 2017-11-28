@@ -51,7 +51,7 @@ class Request {
 
 			if(strtolower($this->options["headers"]["content-type"]) == "application/json") {
 				if(!is_array($this->options["data"])) throw new Exception("Expected array for data option when content type is application/json");
-		  	$this->options["data"] = json_encode($this->options["data"]);
+		  		$this->options["data"] = json_encode($this->options["data"]);
 			}
 		}
 	}
@@ -64,11 +64,10 @@ class Request {
 		$this->con->setOpt(CURLOPT_RETURNTRANSFER, true);
 		$this->con->setOpt(CURLOPT_HEADER, true);
 		$this->con->setOpt(CURLOPT_HTTPHEADER, $this->options["headers"]);
-
 		if(isset($this->options["data"])) $this->con->setOpt(CURLOPT_POSTFIELDS, $this->options["data"]);
 
-		$this->response = new Response($this->con->exec(), $this->options["json"] ?? false);
-
+		// get response
+		$this->response = new Response($this->con->exec(), $this->options["json"]);
 		unset($this->con);
 
 		// retry if rate limited
