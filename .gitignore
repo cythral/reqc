@@ -1,3 +1,4 @@
 reqc.phar
 vendor/
 .expected
+composer.lock
