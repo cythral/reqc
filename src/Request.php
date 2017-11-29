@@ -21,8 +21,8 @@ class Request {
 		"headers" => [
 			"content-type" => "application/x-www-form-urlencoded"
 		],
-		"handle_ratelimits" => true,
-		"max_attempts" => 5,
+		"handle-ratelimits" => true,
+		"max-attempts" => 5,
 		"json" => false
 	];
 
@@ -71,8 +71,10 @@ class Request {
 		unset($this->con);
 
 		// retry if rate limited
-		if($this->response->code == 429) sleep((Integer)$this->response->headers["retry-after"]);
-		else $this->done = true;
+		if($this->options["handle-ratelimits"] && ($this->attempts + 1) != $this->options["max-attempts"]) {
+			if($this->response->code == 429) sleep((Integer)$this->response->headers["retry-after"]);
+			else $this->done = true;
+		}
 	}
 
 	public function __toString() {
