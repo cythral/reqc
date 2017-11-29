@@ -41,6 +41,7 @@ class Response {
 			if(!isset($this->headers["charset"])) $this->headers["charset"] = substr(strstr(strtok(";"), "="), 1);
 		}
 
+		// parse body as json if in json mode
 		if($this->json && strtolower($this->headers["content-type"]) == "application/json") {
 			$json = json_decode($this->body);
 			if(json_last_error() == JSON_ERROR_NONE) $this->body = $json;

@@ -5,7 +5,6 @@ namespace reqc;
 class Curl {
     private $handle;
 
-
     public function __construct($url) {
         $this->handle = curl_init($url);
     }
