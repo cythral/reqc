@@ -1,4 +1,5 @@
 <?php
 
+include dirname(__DIR__)."/src/reqc.php";
 header("content-type: application/json");
-die(file_get_contents('php://input'));
+die(json_encode($_REQUEST, JSON_FORCE_OBJECT));

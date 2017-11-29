@@ -25,7 +25,11 @@ if(TYPE == TYPES["HTTP"]) {
 	$domainParts = array_reverse(explode(".", $_SERVER["HTTP_HOST"]));
 
 	parse_str(strtok("?"), $_GET);
-	parse_str(file_get_contents('php://input'), $_REQUEST);
+	$input = file_get_contents('php://input');
+	$json = json_decode($input, true);
+
+	if(parse_url($input, PHP_URL_QUERY)) parse_str($input, $_REQUEST);
+	if(json_last_error() == JSON_ERROR_NONE) $_REQUEST = $json;
 
 	define("reqc\PROTOCOL", $_SERVER["SERVER_PROTOCOL"]);
 	define("reqc\SSL", (bool)($_SERVER["SSL"] ?? false));
@@ -58,7 +62,7 @@ if(TYPE == TYPES["HTTP"]) {
 	if(isset($argv) && count($argv) > 0) {
 		foreach ($argv as $arg) {
 	    	$e = explode("=",$arg);
-	    	
+
 	    	if(count($e) == 2) $_REQUEST[$e[0]] = $e[1];
 	    	else $_REQUEST[$e[0]] = true;
 	    }

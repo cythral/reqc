@@ -42,7 +42,8 @@ class Response {
 		}
 
 		if($this->json && strtolower($this->headers["content-type"]) == "application/json") {
-			$this->body = json_decode($this->body);
+			$json = json_decode($this->body);
+			if(json_last_error() == JSON_ERROR_NONE) $this->body = $json;
 		}
 
 		unset($this->data, $head, $lead);
