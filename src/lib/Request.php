@@ -4,17 +4,34 @@ namespace reqc;
 
 use \Exception;
 
+/**
+ * The Request class is used for making HTTP Requests
+ *
+ * @author Cythral <talen@cythral.com>
+ */
 class Request {
 
+	/** @var array an array of options **/
 	private $options;
+
+	/** @var Curl a connection handler **/
+	private $con;
+
+	/** @var bool whether or not the request is done or not, used for tracking 429s **/
 	public $done = false;
+
+	/** @var int how many attempts were made before getting a valid response **/
 	public $attempts = 0;
+
+	/** @var Response the response received from making the request **/
 	public $response;
 
+	/** @var array an array of required options **/
 	const REQUIRED_OPTIONS = [
 		"url"
 	];
 
+	/** @var array an array of default options **/
 	const DEFAULT_OPTIONS = [
 		"url" => "",
 		"method" => "GET",
@@ -26,18 +43,29 @@ class Request {
 		"json" => false
 	];
 
-	public function __construct($options) {
+	/**
+	 * Constructor, fired when a new request object is made.
+	 *
+	 * @param array $options different options to use for the request
+	 */
+	public function __construct(array $options) {
 		$this->setupOptions($options);
 
 		while(!$this->done) $this->execute();
 	}
 
-	private function setupOptions($options) {
+	/**
+	 * Validates and sets up the options property.
+	 *
+	 * @param array $options an array of options to validate and setup
+	 */
+	private function setupOptions(array $options) {
 		// check for required options
 		foreach(self::REQUIRED_OPTIONS as $option) {
 			if(!array_key_exists($option, $options)) throw new Exception("Missing Option $option");
 		}
 
+		// setup options
 		$this->options = array_replace_recursive(self::DEFAULT_OPTIONS, $options);
 		$this->options["headers"] = array_change_key_case($this->options["headers"]);
 		if($this->options["json"]) $this->options["headers"]["content-type"] = "application/json";
@@ -56,6 +84,10 @@ class Request {
 		}
 	}
 
+	/**
+	 * Executes the Request.  This will repeat until the done property is
+	 * set to true.
+	 */
 	private function execute() {
 		$this->attempts++;
 
@@ -71,13 +103,20 @@ class Request {
 		unset($this->con);
 
 		// retry if rate limited
-		if($this->options["handle-ratelimits"] && ($this->attempts + 1) != $this->options["max-attempts"]) {
-			if($this->response->code == 429) sleep((Integer)$this->response->headers["retry-after"]);
-			else $this->done = true;
-		}
+		if($this->options["handle-ratelimits"] &&
+		   ($this->attempts + 1) != $this->options["max-attempts"] &&
+	       $this->response->code == 429) {
+			   sleep((Integer)$this->response->headers["retry-after"]);
+
+		} else $this->done = true;
 	}
 
+	/**
+	 * Returns the response body as a string. If it was parsed as json, this will reencode it.
+	 *
+	 * @return string the response body
+	 */
 	public function __toString() {
-		return $this->response->body;
+		return (is_string($this->response->body)) ? $this->response->body : json_encode($this->response->body);
 	}
 }
