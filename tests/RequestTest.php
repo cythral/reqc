@@ -7,7 +7,7 @@ class RequestTest extends TestCase {
 	public function testGetRequest() {
 
 		$req = new reqc\Request([
-			"url" => "http://reqc/build/requestGetTest.php",
+			"url" => "http://reqc/build/request/get.php",
 			"method" => "GET"
 		]);
 
@@ -24,7 +24,7 @@ class RequestTest extends TestCase {
 
 	public function testPostRequest() {
 		$req = new reqc\Request([
-			"url" => "http://reqc/build/requestPostTest.php",
+			"url" => "http://reqc/build/request/post.php",
 			"method" => "POST",
 			"data" => [
 				"foo" => "bar"
@@ -43,7 +43,7 @@ class RequestTest extends TestCase {
 
 	public function testJsonRequest() {
 		$req = new reqc\Request([
-			"url" => "http://reqc/build/requestJsonTest.php",
+			"url" => "http://reqc/build/request/json.php",
 			"method" => "POST",
 			"json" => true,
 			"data" => [

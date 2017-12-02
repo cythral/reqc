@@ -90,7 +90,7 @@ class Request {
 	 */
 	private function execute() {
 		$this->attempts++;
-
+		
 		$this->con = new Curl($this->options["url"]);
 		$this->con->setOpt(CURLOPT_CUSTOMREQUEST, $this->options["method"]);
 		$this->con->setOpt(CURLOPT_RETURNTRANSFER, true);
