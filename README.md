@@ -1,12 +1,14 @@
 # reqc - a requests library
-[![Build Status](https://travis-ci.org/Cythral/reqc.svg?branch=master)](https://travis-ci.org/Cythral/reqc)
+[![Build Status](https://travis-ci.org/cythral/reqc.svg?branch=master)](https://travis-ci.org/cythral/reqc)
 
 **reqc** is a php library for handling incoming and outgoing requests.  It is also a submodule of [Phroses](https://github.com/Cythral/Phroses).  reqc provides constants for various http and cli request variables/parameters, as well as Request and Response objects for making outgoing http requests.
 
 ## Installation
 To install reqc, use composer to install it to your project:
 
-```composer require cythral/reqc```
+```bash
+composer require cythral/reqc
+```
 
 In the future, a packaged phar will also be made available for each release.
 
@@ -14,8 +16,9 @@ In the future, a packaged phar will also be made available for each release.
 ### Making requests
 To make a request, do:
 
-```
-$r = new reqc\Request($options);
+```php
+$request = new reqc\Request($options);
+var_dump($request->response);
 ```
 
 where $options is an array that has the following key => value pairs:
