@@ -35,6 +35,19 @@ where $options is an array that has the following key => value pairs:
 - **max-attempts** - defaults to 5.  Sets the maximum amount of retry attempts to make if handling rate limits.
 
 
+### EventStream Server
+reqc provides an EventStream Server for sending Server Sent Events.  This automatically sets the content-type and cache-control headers.  To create and use an EventStream server, do:
+
+```php
+use \reqc\Server\EventStream;
+
+$es = new EventStream();
+
+$es->sendEvent("testEventName", "hello world"); // named event
+$es->sendEvent(1, "hello world"); // event with an id
+$es->sendEvent(null, "hello world"); // event without a name or id
+$es->sendEvent("test", [ "foo" => "bar" ]); // event with json data
+```
 
 ### Using Constants
 reqc exposes a number of different constants that help to determine how to handle an incoming request. Documentation for each of these is to be added.
