@@ -1,10 +1,11 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use \PHPUnit\Framework\TestCase;
+use \reqc\Client\HTTP\Request;
 
 class ConstantsTest extends TestCase {
 	public function testHttpConstantsIp() {
-		$req = new reqc\Request([
+		$req = new Request([
 			"url" => "http://127.0.0.1/build/constants/http.php",
 			"method" => "GET"
 		]);
@@ -35,7 +36,7 @@ class ConstantsTest extends TestCase {
 	}
 
 	public function testHttpConstantsLocalhost() {
-		$req = new reqc\Request([
+		$req = new Request([
 			"url" => "http://reqc/build/constants/http.php",
 			"method" => "GET"
 		]);
@@ -66,7 +67,7 @@ class ConstantsTest extends TestCase {
 	}
 
 	public function testHttpConstantsLocalhostSd1() {
-		$req = new reqc\Request([
+		$req = new Request([
 			"url" => "http://sd1.reqc/build/constants/http.php",
 			"method" => "GET"
 		]);
@@ -97,7 +98,7 @@ class ConstantsTest extends TestCase {
 	}
 
 	public function testHttpConstantsLocalhostSd2() {
-		$req = new reqc\Request([
+		$req = new Request([
 			"url" => "http://sd2.sd1.reqc/build/constants/http.php",
 			"method" => "GET"
 		]);

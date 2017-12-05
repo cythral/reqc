@@ -11,7 +11,6 @@ define("reqc\TYPES", [
 
 define("reqc\TYPE", php_sapi_name() == "cli" ? TYPES["CLI"] : TYPES["HTTP"]);
 
-
 // HTTP Constants
 if(TYPE == TYPES["HTTP"]) {
 
@@ -68,5 +67,29 @@ if(TYPE == TYPES["HTTP"]) {
 	    }
 	}
 }
+
+// MIME TYPES
+
+define("reqc\MIME_TYPES", [
+	"PHP" => "text/html",
+	"HTML" => "text/html",
+	"XML" => "application/xml",
+	"JSON" => "application/json",
+	"JS" => "text/javascript",
+	"CSS" => "text/css",
+	"WOFF" => "application/font-woff",
+	"WOFF2" => "font/woff2",
+	"TTF" => "font/ttf",
+	"PNG" => "image/png",
+	"JPG" => "image/jpeg",
+	"JPEG" => "image/jpeg",
+	"GIF" => "image/gif",
+	"PDF" => "application/pdf",
+	"WEBP" => "image/webp",
+	"OTF" => "application/font-otf",
+	"ICO" => "image/x-icon",
+	"TPL" => "text/html",
+	"EVENT_STREAM" => "text/event-stream\n\n"
+]);
 
 define("reqc\VARS", $_REQUEST);

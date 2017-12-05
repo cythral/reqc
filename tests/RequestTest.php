@@ -1,12 +1,14 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use \PHPUnit\Framework\TestCase;
+use \reqc\Client\HTTP\Request;
+use \reqc\Client\HTTP\Response;
 
 class RequestTest extends TestCase {
 
 	public function testGetRequest() {
 
-		$req = new reqc\Request([
+		$req = new Request([
 			"url" => "http://reqc/build/request/get.php",
 			"method" => "GET"
 		]);
@@ -15,7 +17,7 @@ class RequestTest extends TestCase {
 
 		$this->assertTrue($req->done);
 		$this->assertEquals(1, $req->attempts);
-		$this->assertInstanceOf(reqc\Response::class, $resp);
+		$this->assertInstanceOf(Response::class, $resp);
 		$this->assertEquals(200, $resp->code);
 		$this->assertEquals('hello world', (String)$req);
 		$this->assertEquals('hello world', $resp->body);
@@ -23,7 +25,7 @@ class RequestTest extends TestCase {
 	}
 
 	public function testPostRequest() {
-		$req = new reqc\Request([
+		$req = new Request([
 			"url" => "http://reqc/build/request/post.php",
 			"method" => "POST",
 			"data" => [
@@ -35,14 +37,14 @@ class RequestTest extends TestCase {
 
 		$this->assertTrue($req->done);
 		$this->assertEquals(1, $req->attempts);
-		$this->assertInstanceOf(reqc\Response::class, $resp);
+		$this->assertInstanceOf(Response::class, $resp);
 		$this->assertEquals(200, $resp->code);
 		$this->assertEquals(["foo" => "bar"], json_decode($resp->body, true));
 		$this->assertEquals("application/json", $resp->headers["content-type"]);
 	}
 
 	public function testJsonRequest() {
-		$req = new reqc\Request([
+		$req = new Request([
 			"url" => "http://reqc/build/request/json.php",
 			"method" => "POST",
 			"json" => true,
@@ -58,7 +60,7 @@ class RequestTest extends TestCase {
 
 		$this->assertTrue($req->done);
 		$this->assertEquals(1, $req->attempts);
-		$this->assertInstanceOf(reqc\Response::class, $resp);
+		$this->assertInstanceOf(Response::class, $resp);
 		$this->assertEquals(200, $resp->code);
 		$this->assertEquals($expectedBody, $body);
 		$this->assertEquals("application/json", $resp->headers["content-type"]);

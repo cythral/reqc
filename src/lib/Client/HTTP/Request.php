@@ -1,8 +1,10 @@
 <?php
 
-namespace reqc;
+namespace reqc\Client\HTTP;
 
+use \reqc\Client\HTTP\Transport\Curl;
 use \Exception;
+
 
 /**
  * The Request class is used for making HTTP Requests

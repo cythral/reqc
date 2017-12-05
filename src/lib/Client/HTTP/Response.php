@@ -1,6 +1,6 @@
 <?php
 
-namespace reqc;
+namespace reqc\Client\HTTP;
 
 /**
  * The Response class parses data returned from a Request object.
