@@ -6,6 +6,7 @@ use const \reqc\{MIME_TYPES};
 
 final class EventStream extends Output {
     public function __construct() {
+        ob_end_clean();
         $this->setContentType(MIME_TYPES["EVENT_STREAM"]);
         $this->setHeader("cache-control", "no-cache");
     }
@@ -18,7 +19,7 @@ final class EventStream extends Output {
 
     private function flush(string $output) {
         echo $output;
-        ob_end_flush();
+        //ob_end_flush();
         flush();
     }
 
