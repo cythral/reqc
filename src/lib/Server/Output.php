@@ -2,7 +2,7 @@
 
 namespace reqc\Server;
 
-use const \reqc\{EXTENSION, MIME_TYPES};
+use const \reqc\{TYPE, TYPES, EXTENSION, MIME_TYPES};
 
 class Output {
 
@@ -11,7 +11,7 @@ class Output {
     }
 
     public function setHeader(string $headerName, string $headerValue, bool $replace = true) {
-        header("{$headerName}: {$headerValue}", $replace);
+        if(TYPE != TYPES["CLI"]) header("{$headerName}: {$headerValue}", $replace);
     }
 
     public function setContentType(string $contentType) {

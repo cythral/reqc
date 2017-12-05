@@ -12,7 +12,8 @@ final class EventStream extends Output {
 
     public function sendEvent($key = null, $value) {
         if(is_string($key)) $this->sendNamedEvent($key, $value);
-        if(is_integer($key)) $this->sendIdEvent($key, $value);
+        else if(is_integer($key)) $this->sendIdEvent($key, $value);
+        else if(!$key) $this->flush("data:$value\n\n");
     }
 
     private function flush(string $output) {
