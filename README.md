@@ -13,11 +13,13 @@ composer require cythral/reqc
 In the future, a packaged phar will also be made available for each release.
 
 ## Usage
-### Making requests
+### Making HTTP Requests
 To make a request, do:
 
 ```php
-$request = new reqc\Request($options);
+use \reqc\Client\HTTP\Request;
+
+$request = new Request($options);
 var_dump($request->response);
 ```
 
