@@ -4,7 +4,7 @@
 	"description" : "A library for handling incoming and outgoing requests.",
 	"license" : "GPL-3.0",
 	"author" : {
-		"name" : "Cythral",
+		"name" : "cythral",
 		"email" : "talen@cythral.com"
 	},
 
@@ -25,5 +25,8 @@
 		"exclude-from-classmap" : [
 			"/src/reqc.php"
 		]
+	},
+	"require-dev": {
+		"kherge/box": "^2.7"
 	}
 }

@@ -1,6 +1,6 @@
 <?php
-
-include dirname(__DIR__)."/src/reqc.php";
+ob_end_clean();
+include dirname(dirname(__DIR__))."/src/reqc.php";
 header("Content-Type: application/json");
 
 $constants = get_defined_constants(true)["user"];

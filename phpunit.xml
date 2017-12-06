@@ -2,5 +2,6 @@
 	<testsuite name="reqctests">
 		<file>tests/RequestTest.php</file>
 		<file>tests/ConstantsTest.php</file>
+		<file>tests/EventStreamTest.php</file>
 	</testsuite>
 </phpunit>

@@ -1,0 +1,6 @@
+{
+    "directories" : [""],
+    "output" : "build/reqc.phar",
+    "stub" : true,
+    "main" : "build/constants/http.php"
+}

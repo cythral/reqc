@@ -2,8 +2,10 @@ language: php
 php:
 - '7.0'
 - '7.1'
+- '7.2'
 before_script:
  - composer install
+ - vendor/bin/box build
  - sudo apt-get update
  - sudo apt-get install apache2 libapache2-mod-fastcgi
  # enable php-fpm
