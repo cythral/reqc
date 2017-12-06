@@ -27,7 +27,7 @@ if(TYPE == TYPES["HTTP"]) {
 	$input = file_get_contents('php://input');
 	$json = json_decode($input, true);
 
-	if(parse_url($input, PHP_URL_QUERY)) parse_str($input, $_REQUEST);
+	if(parse_url("?".$input, PHP_URL_QUERY)) parse_str($input, $_REQUEST);
 	if(json_last_error() == JSON_ERROR_NONE) $_REQUEST = $json;
 
 	define("reqc\PROTOCOL", $_SERVER["SERVER_PROTOCOL"]);

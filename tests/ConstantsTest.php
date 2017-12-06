@@ -133,14 +133,13 @@ class ConstantsTest extends TestCase {
 	public function testPharConstants() {
 		$req = new Request([
 			"url" => "http://reqc/build/reqc.phar",
-			"method" => "POST",
+			"method" => "PATCH",
 			"data" => [
 				"foo" => "bar"
 			]
 		]);
 
 		$constants = json_decode($req->response->body, true);
-		var_dump($constants);
 		$this->assertEquals(["foo" => "bar"], $constants["reqc\\VARS"]);
 	}
 
