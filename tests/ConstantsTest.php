@@ -140,6 +140,7 @@ class ConstantsTest extends TestCase {
 		]);
 
 		$constants = json_decode($req->response->body, true);
+		var_dump($constants);
 		$this->assertEquals(["foo" => "bar"], $constants["reqc\\VARS"]);
 	}
 
