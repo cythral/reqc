@@ -28,6 +28,7 @@ notifications:
      - http://api.phroses.com/travis
     on_success: always
     on_failure: always
+    
 addons:
   hosts:
     - reqc
