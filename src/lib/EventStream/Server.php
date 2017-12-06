@@ -1,17 +1,17 @@
 <?php
 
-namespace reqc\Server;
+namespace reqc\EventStream;
 
+use \reqc\Output;
 use const \reqc\{MIME_TYPES};
 
-final class EventStream extends Output {
+class Server extends Output {
     public function __construct() {
-        ob_end_clean();
         $this->setContentType(MIME_TYPES["EVENT_STREAM"]);
         $this->setHeader("cache-control", "no-cache");
     }
 
-    public function sendEvent($key = null, $value) {
+    public function send($key = null, $value) {
         if(is_string($key)) $this->sendNamedEvent($key, $value);
         else if(is_integer($key)) $this->sendIdEvent($key, $value);
         else if(!$key) $this->flush("data:$value\n\n");
@@ -19,7 +19,6 @@ final class EventStream extends Output {
 
     private function flush(string $output) {
         echo $output;
-        //ob_end_flush();
         flush();
     }
 

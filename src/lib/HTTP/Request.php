@@ -1,8 +1,8 @@
 <?php
 
-namespace reqc\Client\HTTP;
+namespace reqc\HTTP;
 
-use \reqc\Client\HTTP\Transport\Curl;
+use \reqc\HTTP\Transport\Curl;
 use \Exception;
 
 

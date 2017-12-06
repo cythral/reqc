@@ -1,6 +1,6 @@
 <?php
 
-namespace reqc\Client\HTTP\Transport;
+namespace reqc\HTTP\Transport;
 
 /**
  * The Curl class is a connection helper for the Response class.

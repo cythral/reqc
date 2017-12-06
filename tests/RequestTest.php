@@ -1,8 +1,8 @@
 <?php
 
 use \PHPUnit\Framework\TestCase;
-use \reqc\Client\HTTP\Request;
-use \reqc\Client\HTTP\Response;
+use \reqc\HTTP\Request;
+use \reqc\HTTP\Response;
 
 class RequestTest extends TestCase {
 

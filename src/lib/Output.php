@@ -1,11 +1,10 @@
 <?php
 
-namespace reqc\Server;
+namespace reqc;
 
 use const \reqc\{TYPE, TYPES, EXTENSION, MIME_TYPES};
 
 class Output {
-
     public function __construct(bool $autoContentType = true) {
         if($autoContentType) $this->setContentType(MIME_TYPES[strtoupper(EXTENSION)] ?? "text/html");
     }

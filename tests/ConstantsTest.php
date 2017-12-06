@@ -1,7 +1,7 @@
 <?php
 
 use \PHPUnit\Framework\TestCase;
-use \reqc\Client\HTTP\Request;
+use \reqc\HTTP\Request;
 
 class ConstantsTest extends TestCase {
 	public function testHttpConstantsIp() {

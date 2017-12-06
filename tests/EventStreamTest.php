@@ -1,43 +1,39 @@
 <?php
 
 use \PHPUnit\Framework\TestCase;
-use \reqc\Server\EventStream;
-use \reqc\Client\HTTP\Request;
+use \reqc\EventStream\Server as EventStreamServer;
+use \reqc\HTTP\Request;
 
 // MUST USE OB_START OTHERWISE PHPUNIT WILL SKIP THE TEST
 
 class EventStreamTest extends TestCase {
 
     public function testNamedEvent() {
-        $es = new EventStream();
-        ob_start();
+        $es = new EventStreamServer();
 
         $this->expectOutputString("event:progress\ndata:10\n\n");
-        $es->sendEvent("progress", 10);
+        $es->send("progress", 10);
     }
 
     public function testNamedEventWithJson() {
-        $es = new EventStream();
-        ob_start();
+        $es = new EventStreamServer();
 
         $this->expectOutputString("event:progress\ndata:{\"value\":10}\n\n");
-        $es->sendEvent("progress", ["value" => 10]);
+        $es->send("progress", ["value" => 10]);
     }
 
     public function testIdEvent() {
-        $es = new EventStream();
-        ob_start();
+        $es = new EventStreamServer();
 
         $this->expectOutputString("id:1\ndata:test\n\n");
-        $es->sendEvent(1, "test");
+        $es->send(1, "test");
     }
 
     public function testDataEvent() {
-        $es = new EventStream();
-        ob_start();
+        $es = new EventStreamServer();
 
         $this->expectOutputString("data:test\n\n");
-        $es->sendEvent(null, "test");
+        $es->send(null, "test");
     }
 
     public function testOutput() {
