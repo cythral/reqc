@@ -5,8 +5,7 @@ php:
 - '7.2'
 before_script:
  - composer install
- - sudo ln -s vendor/bin/box /usr/local/bin/box
- - box build
+ - vendor/bin/box build
  - sudo apt-get update
  - sudo apt-get install apache2 libapache2-mod-fastcgi
  # enable php-fpm
