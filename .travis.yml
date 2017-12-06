@@ -22,14 +22,12 @@ before_script:
  - sudo service apache2 restart
 script:
  - phpunit
-after_success:
-  - wget https://raw.githubusercontent.com/snkrsnkampa/travis-ci-discord-webhook/master/send.sh
-  - chmod +x send.sh
-  - ./send.sh success $WEBHOOK_URL
-after_failure:
-  - wget https://raw.githubusercontent.com/snkrsnkampa/travis-ci-discord-webhook/master/send.sh
-  - chmod +x send.sh
-  - ./send.sh failure $WEBHOOK_URL
+notifications:
+  webhooks:
+    urls:
+     - http://api.phroses.com/travis
+    on_success: always
+    on_failure: always
 addons:
   hosts:
     - reqc
