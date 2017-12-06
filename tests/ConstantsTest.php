@@ -3,6 +3,8 @@
 use \PHPUnit\Framework\TestCase;
 use \reqc\HTTP\Request;
 
+
+
 class ConstantsTest extends TestCase {
 	public function testHttpConstantsIp() {
 		$req = new Request([
@@ -126,6 +128,19 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals("sd1", $constants["reqc\\DOMAIN"]);
 		$this->assertEquals("reqc", $constants["reqc\\TLD"]);
 		$this->assertFalse(isset($constants["reqc\\HOSTISIP"]));
+	}
+
+	public function testPharConstants() {
+		$req = new Request([
+			"url" => "http://reqc/build/reqc.phar",
+			"method" => "POST",
+			"data" => [
+				"foo" => "bar"
+			]
+		]);
+
+		$constants = json_decode($req->response->body, true);
+		$this->assertEquals(["foo" => "bar"], $constants["reqc\\VARS"]);
 	}
 
 	public function testCliConstants() {

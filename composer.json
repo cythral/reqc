@@ -25,5 +25,8 @@
 		"exclude-from-classmap" : [
 			"/src/reqc.php"
 		]
+	},
+	"require-dev": {
+		"kherge/box": "^2.7"
 	}
 }

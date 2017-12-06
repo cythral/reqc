@@ -1,5 +1,5 @@
 <?php
-
+ob_end_clean();
 include dirname(dirname(__DIR__))."/src/reqc.php";
 header("Content-Type: application/json");
 
