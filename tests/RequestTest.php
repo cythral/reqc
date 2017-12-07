@@ -65,4 +65,11 @@ class RequestTest extends TestCase {
 		$this->assertEquals($expectedBody, $body);
 		$this->assertEquals("application/json", $resp->headers["content-type"]);
 	}
+
+	public function testRateLimitedRequest() {
+		$req = new Request([ "url" => "http://reqc/build/request/ratelimited.php" ]);
+		$this->assertTrue($req->done);
+		$this->assertEquals(2, $req->attempts);
+		$this->assertEquals("success", (String)$req);
+	}
 }
