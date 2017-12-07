@@ -9,7 +9,6 @@ define("reqc\TYPES", [
 	"ASSET" => 3
 ]);
 
-
 define("reqc\TYPE", php_sapi_name() == "cli" ? TYPES["CLI"] : TYPES["HTTP"]);
 
 // HTTP Constants
