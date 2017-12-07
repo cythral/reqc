@@ -1,7 +1,14 @@
-<phpunit bootstrap="vendor/autoload.php">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true" bootstrap="vendor/autoload.php">
 	<testsuite name="reqctests">
 		<file>tests/RequestTest.php</file>
 		<file>tests/ConstantsTest.php</file>
 		<file>tests/EventStreamTest.php</file>
 	</testsuite>
+
+	<filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src/</directory>
+        </whitelist>
+    </filter>
 </phpunit>
