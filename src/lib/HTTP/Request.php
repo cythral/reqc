@@ -44,7 +44,8 @@ class Request {
 		],
 		"handle-ratelimits" => true,
 		"max-attempts" => 5,
-		"json" => false
+		"json" => false,
+		"use-fsockopen" => false
 	];
 
 	const TRANSPORTS = [
@@ -61,7 +62,7 @@ class Request {
 		$this->setupOptions($options);
 
 		// revert to fsockopen if curl not available
-		if(!class_exists($this->transport)) $this->transport = self::TRANSPORTS["FSOCKOPEN"];
+		if(!class_exists($this->transport) || $this->options["use-fsockopen"]) $this->transport = self::TRANSPORTS["FSOCKOPEN"];
 
 		while(!$this->done) $this->execute();
 	}
