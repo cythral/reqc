@@ -2,7 +2,7 @@
 
 namespace reqc\HTTP;
 
-use \reqc\HTTP\Transport\Curl;
+use \reqc\HTTP\Transport\Fsockopen;
 use \Exception;
 
 
@@ -28,6 +28,8 @@ class Request {
 	/** @var Response the response received from making the request **/
 	public $response;
 
+	private $transport = self::TRANSPORTS["CURL"];
+
 	/** @var array an array of required options **/
 	const REQUIRED_OPTIONS = [
 		"url"
@@ -45,6 +47,11 @@ class Request {
 		"json" => false
 	];
 
+	const TRANSPORTS = [
+		"CURL" => "reqc\HTTP\Transport\Curl",
+		"FSOCKOPEN" => "reqc\HTTP\Transport\Fsockopen"
+	];
+
 	/**
 	 * Constructor, fired when a new request object is made.
 	 *
@@ -52,6 +59,9 @@ class Request {
 	 */
 	public function __construct(array $options) {
 		$this->setupOptions($options);
+
+		// revert to fsockopen if curl not available
+		if(!class_exists($this->transport)) $this->transport = self::TRANSPORTS["FSOCKOPEN"];
 
 		while(!$this->done) $this->execute();
 	}
@@ -92,14 +102,14 @@ class Request {
 	 */
 	private function execute() {
 		$this->attempts++;
-		
-		$this->con = new Curl($this->options["url"]);
+
+		$this->con = new $this->transport($this->options["url"]);
 		$this->con->setMethod($this->options["method"]);
 		$this->con->setHeaders($this->options["headers"]);
-		if(isset($this->options["data"])) $this->con->setFields($this->options["data"]);
+		if(isset($this->options["data"])) $this->con->setBody($this->options["data"]);
 
 		// get response
-		$this->response = new Response($this->con->exec(), $this->options["json"]);
+		$this->response = new Response($this->con->exec(), $this->options["json"], ($this->transport == self::TRANSPORTS["CURL"]) ? false : true);
 		unset($this->con);
 
 		// retry if rate limited

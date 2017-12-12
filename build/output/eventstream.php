@@ -1,7 +1,9 @@
 <?php
 
 include dirname(dirname(__DIR__))."/vendor/autoload.php";
+ob_end_clean();
 $out = new reqc\EventStream\Server();
+
 
 $out->send("progress", ["value" => 10]);
 sleep(3);

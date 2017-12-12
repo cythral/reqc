@@ -37,6 +37,7 @@ class EventStreamTest extends TestCase {
     public function testOutput() {
         $req = new Request([ "url" => "http://reqc/build/output/eventstream.php" ]);
         $resp = (String)$req->response;
+
         $events = explode("\n\n", $resp);
 
         $this->assertEquals("event:progress\ndata:{\"value\":10}", $events[0]);
