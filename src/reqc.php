@@ -33,8 +33,6 @@ if(TYPE == TYPES["HTTP"]) {
 	define("reqc\PROTOCOL", $_SERVER["SERVER_PROTOCOL"]);
 	define("reqc\SSL", (bool)($_SERVER["SSL"] ?? false));
 	define("reqc\IP", $_SERVER["REMOTE_ADDR"]);
-	define("reqc\USERAGENT", $_SERVER["HTTP_USER_AGENT"] ?? null);
-	define("reqc\ACCEPT", explode(",", ($_SERVER["HTTP_ACCEPT"] ?? '')));
 	define("reqc\PORT", (int)$_SERVER['SERVER_PORT']);
 	define("reqc\HOST", strtok($_SERVER["HTTP_HOST"], ":"));
 	define("reqc\METHOD", strtoupper($_SERVER['REQUEST_METHOD']));
@@ -48,6 +46,17 @@ if(TYPE == TYPES["HTTP"]) {
 	define("reqc\FILE", $filename.((isset($extension)) ? ".".$extension : ""));
 	define("reqc\PATH", $directory."/".$filename.((isset($extension)) ? ".".$extension : ""));
 	define("reqc\H2PUSH", (bool)($_SERVER["H2PUSH"] ?? false));
+
+	// get headers
+	$headers = [];
+	foreach($_SERVER as $key => $val) {
+		if(substr(strtolower($key), 0, 5) == "http_") $headers[substr($key, 5)] = $val;
+	}
+	define("reqc\HEADERS", $headers);
+
+	// keep backwards compatibility with v1.0-1.3
+	define("reqc\ACCEPT", HEADERS["ACCEPT"]);
+	define("reqc\HOST", HEADERS["HOST"]);
 
 	if(!filter_var(HOST, \FILTER_VALIDATE_IP)) {
 		define("reqc\TLD", $domainParts[0]);

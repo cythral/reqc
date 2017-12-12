@@ -4,8 +4,6 @@ use \PHPUnit\Framework\TestCase;
 use \reqc\EventStream\Server as EventStreamServer;
 use \reqc\HTTP\Request;
 
-// MUST USE OB_START OTHERWISE PHPUNIT WILL SKIP THE TEST
-
 class EventStreamTest extends TestCase {
 
     public function testNamedEvent() {
