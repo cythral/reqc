@@ -34,7 +34,6 @@ if(TYPE == TYPES["HTTP"]) {
 	define("reqc\SSL", (bool)($_SERVER["SSL"] ?? false));
 	define("reqc\IP", $_SERVER["REMOTE_ADDR"]);
 	define("reqc\PORT", (int)$_SERVER['SERVER_PORT']);
-	define("reqc\HOST", strtok($_SERVER["HTTP_HOST"], ":"));
 	define("reqc\METHOD", strtoupper($_SERVER['REQUEST_METHOD']));
 	define("reqc\BASEURL", $_SERVER["SERVER_NAME"]);
 	define("reqc\FULLURL", (SSL ? "https://" : "http://").$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
