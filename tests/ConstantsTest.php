@@ -103,10 +103,8 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(200, $req->response->code);
 		$constants = json_decode($req->response->body, true);
 
-		$this->assertEquals(["*/*"], $constants["reqc\\ACCEPT"]);
 		$this->assertEquals(80, $constants["reqc\\PORT"]);
 		$this->assertEquals([], $constants["reqc\\VARS"]);
-		$this->assertEquals("sd2.sd1.reqc", $constants["reqc\\HOST"]);
 		$this->assertEquals("GET", $constants["reqc\\METHOD"]);
 		$this->assertEquals("sd2.sd1.reqc", $constants["reqc\\BASEURL"]);
 		$this->assertEquals("http://sd2.sd1.reqc/build/constants/http.php", $constants["reqc\\FULLURL"]);
