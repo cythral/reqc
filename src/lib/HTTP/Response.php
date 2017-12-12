@@ -73,12 +73,7 @@ class Response {
 			if(!isset($this->headers["charset"])) $this->headers["charset"] = substr(strstr(strtok(";"), "="), 1);
 		}
 
-		// parse body as json if in json mode
-		if($this->json && strtolower($this->headers["content-type"]) == "application/json") {
-			$json = json_decode($this->body);
-			if(json_last_error() == JSON_ERROR_NONE) $this->body = $json;
-		}
-
+		// decode if chunked
 		if($this->decodeChunked && isset($this->headers["transfer-encoding"]) && strtolower($this->headers["transfer-encoding"]) == "chunked") {
 			for($decoded = ""; !empty($this->body); $this->body = trim($this->body)) {
 				$position = strpos($this->body, "\r\n");
@@ -91,13 +86,15 @@ class Response {
 			unset($decoded);
 		}
 
+		// parse body as json if in json mode
+		if($this->json && strtolower($this->headers["content-type"]) == "application/json") {
+			$json = json_decode($this->body);
+			if(json_last_error() == JSON_ERROR_NONE) $this->body = $json;
+		}
+
 		// cleanup
 		unset($this->data, $head, $lead);
 
-		
-	}
-
-	private function decodeChunked() {
 		
 	}
 
