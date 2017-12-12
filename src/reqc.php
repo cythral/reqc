@@ -53,7 +53,7 @@ if(TYPE == TYPES["HTTP"]) {
 	foreach($_SERVER as $key => $val) {
 		if(substr(strtolower($key), 0, 5) == "http_") $headers[substr($key, 5)] = $val;
 	}
-	$headers["ACCEPT"] = explode(",", $headers["ACCEPT"]);
+	$headers["ACCEPT"] = explode(",", $headers["ACCEPT"] ?? "");
 	if(!defined("reqc\HEADERS")) 	define("reqc\HEADERS", $headers);
 
 	// keep backwards compatibility with v1.0-1.3
