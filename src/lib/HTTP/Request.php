@@ -94,11 +94,9 @@ class Request {
 		$this->attempts++;
 		
 		$this->con = new Curl($this->options["url"]);
-		$this->con->setOpt(CURLOPT_CUSTOMREQUEST, $this->options["method"]);
-		$this->con->setOpt(CURLOPT_RETURNTRANSFER, true);
-		$this->con->setOpt(CURLOPT_HEADER, true);
-		$this->con->setOpt(CURLOPT_HTTPHEADER, $this->options["headers"]);
-		if(isset($this->options["data"])) $this->con->setOpt(CURLOPT_POSTFIELDS, $this->options["data"]);
+		$this->con->setMethod($this->options["method"]);
+		$this->con->setHeaders($this->options["headers"]);
+		if(isset($this->options["data"])) $this->con->setFields($this->options["data"]);
 
 		// get response
 		$this->response = new Response($this->con->exec(), $this->options["json"]);

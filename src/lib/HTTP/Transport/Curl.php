@@ -17,6 +17,8 @@ class Curl {
      */
     public function __construct(string $url) {
         $this->handle = curl_init($url);
+        $this->setOpt(CURLOPT_RETURNTRANSFER, true);
+		$this->setOpt(CURLOPT_HEADER, true);
     }
 
     /**
@@ -28,6 +30,36 @@ class Curl {
      */
     public function setOpt(int $option, $value): bool {
         return curl_setopt($this->handle, $option, $value);
+    }
+
+    /**
+     * Sets the HTTP verb / method to use
+     * 
+     * @param string $method the http method to use
+     * @return bool true on success or false on failure
+     */
+    public function setMethod(string $method): bool {
+        return $this->setOpt(CURLOPT_CUSTOMREQUEST, $method);
+    }
+
+    /**
+     * Sets HTTP Request Headers
+     * 
+     * @param array $headers the http headers to use
+     * @return bool true on succes or false on failure
+     */
+    public function setHeaders(array $headers): bool {
+        return $this->setOpt(CURLOPT_HTTPHEADER, $headers);
+    }
+
+    /**
+     * Sets Data Fields
+     * 
+     * @param mixed $data the data fields to send
+     * @return bool true on succes or false on failure
+     */
+    public function setFields($data): bool {
+        return $this->setOpt(CURLOPT_POSTFIELDS, $data);
     }
 
     /**
