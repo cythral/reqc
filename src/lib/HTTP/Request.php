@@ -2,7 +2,6 @@
 
 namespace reqc\HTTP;
 
-use \reqc\HTTP\Transport\Fsockopen;
 use \Exception;
 
 

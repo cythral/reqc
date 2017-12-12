@@ -26,7 +26,6 @@ class RequestTest extends TestCase {
 	 */
 	public function testPostRequest($req) {
 		$resp = $req->response;
-		var_dump($resp->body);
 
 		$this->assertTrue($req->done);
 		$this->assertEquals(1, $req->attempts);
@@ -44,7 +43,6 @@ class RequestTest extends TestCase {
 		$body = $resp->body;
 		$expectedBody = new stdClass;
 		$expectedBody->foo = "bar";
-		var_dump($body);
 		
 		$this->assertTrue($req->done);
 		$this->assertEquals(1, $req->attempts);
