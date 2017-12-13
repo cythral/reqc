@@ -94,6 +94,19 @@ class Request {
 		  		$this->options["data"] = json_encode($this->options["data"]);
 			}
 		}
+
+		// setup authentication
+		if(isset($this->options["auth"])) {
+			if(isset($this->options["auth"]["type"])) {
+				$this->options["auth"]["type"] = strtolower($this->options["auth"]["type"]);
+
+				// basic authentication
+				if($this->options["auth"]["type"] == "basic") {
+					$this->options["headers"]["authorization"] = "Basic ".base64_encode($this->options["auth"]["user"].":".$this->options["auth"]["pass"]);
+					echo $this->options["headers"]["authorization"].PHP_EOL;
+				}
+			}
+		}
 	}
 
 	/**

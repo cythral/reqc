@@ -60,6 +60,17 @@ class RequestTest extends TestCase {
 		$this->assertEquals(2, $req->attempts);
 		$this->assertEquals("success", (String)$req);
 	}
+
+	/**
+	 * @dataProvider providerAuthentication
+	 */
+	public function testAuthentication($req, $expectsuccess) {
+		if($expectsuccess) {
+			$this->assertEquals("success", $req->response->body);
+		} else {
+			$this->assertEquals("invalid", $req->response->body);
+		}
+	}
 	
 	
 	public function providerGetRequest() {
@@ -102,6 +113,17 @@ class RequestTest extends TestCase {
 		return [
 			[ new Request($options) ],
 			[ new Request($options + ["use-fsockopen" => true]) ]
+		];
+	}
+
+	public function providerAuthentication() {
+		$options = [ 
+			"url" => "http://reqc/build/request/authentication.php"
+		];
+
+		return [
+			[ new Request($options + ["auth" => [ "type" => "basic", "user" => "root", "pass" => "password" ]]), true ],
+			[ new Request($options + ["auth" => [ "type" => "basic", "user" => "root", "pass" => "passwordx" ]]), false ]
 		];
 	}
 }
