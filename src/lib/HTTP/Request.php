@@ -102,7 +102,7 @@ class Request {
 
 				// basic authentication
 				if($this->options["auth"]["type"] == "basic") {
-					$this->options["headers"]["Authorization"] = "Basic ".base64_encode($this->options["auth"]["user"].":".$this->options["auth"]["pass"]);
+					$this->options["headers"]["authorization"] = "Basic ".base64_encode($this->options["auth"]["user"].":".$this->options["auth"]["pass"]);
 				}
 			}
 		}
@@ -126,7 +126,7 @@ class Request {
 
 		// retry if rate limited
 		if($this->options["handle-ratelimits"] &&
-		   ($this->attempts + 1) != $this->options["max-attempts"] &&
+		   $this->attempts != $this->options["max-attempts"] &&
 	       $this->response->code == 429) {
 			   sleep((Integer)$this->response->headers["retry-after"]);
 
