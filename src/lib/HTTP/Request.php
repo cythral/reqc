@@ -102,8 +102,7 @@ class Request {
 
 				// basic authentication
 				if($this->options["auth"]["type"] == "basic") {
-					$this->options["headers"]["authorization"] = "Basic ".base64_encode($this->options["auth"]["user"].":".$this->options["auth"]["pass"]);
-					echo $this->options["headers"]["authorization"].PHP_EOL;
+					$this->options["headers"]["Authorization"] = "Basic ".base64_encode($this->options["auth"]["user"].":".$this->options["auth"]["pass"]);
 				}
 			}
 		}

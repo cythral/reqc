@@ -50,6 +50,10 @@ if(function_exists("curl_init")) {
          * @return bool true on succes or false on failure
          */
         public function setHeaders(array $headers): bool {
+            array_walk($headers, function(&$value, $key) {
+                $value = "{$key}: {$value}";
+            });
+
             return $this->setOpt(CURLOPT_HTTPHEADER, $headers);
         }
 
