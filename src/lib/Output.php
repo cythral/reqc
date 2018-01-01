@@ -9,6 +9,10 @@ class Output {
         if($autoContentType) $this->setContentType(MIME_TYPES[strtoupper(EXTENSION)] ?? "text/html");
     }
 
+    public function setCode(int $code) {
+        return http_response_code($code);
+    }
+
     public function setHeader(string $headerName, string $headerValue, bool $replace = true) {
         if(TYPE != TYPES["CLI"]) header("{$headerName}: {$headerValue}", $replace);
     }

@@ -8,7 +8,7 @@ class EventStreamTest extends TestCase {
 
     public function testNamedEvent() {
         $es = new EventStreamServer();
-
+        
         $this->expectOutputString("event:progress\ndata:10\n\n");
         $es->send("progress", 10);
     }
