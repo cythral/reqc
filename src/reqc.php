@@ -84,6 +84,7 @@ if(TYPE == TYPES["HTTP"]) {
 // MIME TYPES
 if(!defined("reqc\MIME_TYPES")) {
 	define("reqc\MIME_TYPES", [
+		"TXT" => "text/plain",
 		"PHP" => "text/html",
 		"HTML" => "text/html",
 		"XML" => "application/xml",
