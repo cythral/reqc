@@ -4,6 +4,7 @@
 		<file>tests/RequestTest.php</file>
 		<file>tests/ConstantsTest.php</file>
 		<file>tests/EventStreamTest.php</file>
+		<file>tests/JsonServerTest.php</file>
 	</testsuite>
 
 	<filter>

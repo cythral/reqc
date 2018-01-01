@@ -87,7 +87,7 @@ class Request {
 	}
 
 	/**
-	 * Adjust data field based on content-type header, if present.
+	 * Adjusts the data field based on content-type header, if present.
 	 */
 	private function setupData() {
 		if(isset($this->options["data"])) {
