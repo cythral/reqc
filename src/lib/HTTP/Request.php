@@ -82,7 +82,14 @@ class Request {
 		$this->options["headers"] = array_change_key_case($this->options["headers"]);
 		if($this->options["json"]) $this->options["headers"]["content-type"] = "application/json";
 
-		// adjust data value based on content-type if present
+		$this->setupData();
+		$this->setupAuthentication();
+	}
+
+	/**
+	 * Adjust data field based on content-type header, if present.
+	 */
+	private function setupData() {
 		if(isset($this->options["data"])) {
 			if(strtolower($this->options["headers"]["content-type"]) == "application/x-www-form-urlencoded") {
 				if(!is_array($this->options["data"])) throw new Exception("Expected array for data option when content type is application/x-www-form-urlencoded");
@@ -94,8 +101,12 @@ class Request {
 		  		$this->options["data"] = json_encode($this->options["data"]);
 			}
 		}
+	}
 
-		// setup authentication
+	/**
+	 * Setup HTTP Authentication, if the auth option is present.
+	 */
+	private function setupAuthentication() {
 		if(isset($this->options["auth"])) {
 			if(isset($this->options["auth"]["type"])) {
 				$this->options["auth"]["type"] = strtolower($this->options["auth"]["type"]);
@@ -103,6 +114,11 @@ class Request {
 				// basic authentication
 				if($this->options["auth"]["type"] == "basic") {
 					$this->options["headers"]["authorization"] = "Basic ".base64_encode($this->options["auth"]["user"].":".$this->options["auth"]["pass"]);
+				}
+
+				// bearer authentication
+				if($this->options["auth"]["type"] == "bearer") {
+					$this->options["headers"]["authorization"] = "Bearer ".$this->options["auth"]["token"];
 				}
 			}
 		}
