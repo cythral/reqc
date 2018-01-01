@@ -1,4 +1,4 @@
-# reqc [![Build Status](https://travis-ci.org/cythral/reqc.svg?branch=master)](https://travis-ci.org/cythral/reqc) [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](https://github.com/cythral/reqc/blob/master/LICENSE) [![GitHub release](https://img.shields.io/github/release/cythral/reqc.svg)](https://github.com/cythral/reqc/releases/latest)
+# reqc [![Build Status](https://travis-ci.org/cythral/reqc.svg?branch=master)](https://travis-ci.org/cythral/reqc) [![Coverage Status](https://coveralls.io/repos/github/cythral/reqc/badge.svg)](https://coveralls.io/github/cythral/reqc) [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](https://github.com/cythral/reqc/blob/master/LICENSE) [![GitHub release](https://img.shields.io/github/release/cythral/reqc.svg)](https://github.com/cythral/reqc/releases/latest)
 **Request handling made easy in PHP**
 ----
 
@@ -34,6 +34,7 @@ where $options is an array that has the following key => value pairs:
 - **max-attempts** - defaults to 5.  Sets the maximum amount of retry attempts to make if handling rate limits.
 
 \* indicates a required option
+
 
 ### EventStream Server
 Reqc provides a EventStream Server for sending Server-Sent Events.  The interface is simple, the only method to note is send, which sends events to the client.  This automatically sets the content-type and cache-control headers.  To create and use an EventStream server, do:

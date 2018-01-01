@@ -26,15 +26,21 @@ class Response {
 	/** @var int the parsed http version **/
 	public $httpVersion;
 
+	public $raw;
+
+	private $decodeChunked;
+
 	/**
 	 * Constructor, fired when a new response object is created.
 	 *
 	 * @param string $data text returned from a request to be parsed
 	 * @param boolean $json whether or not to parse the body as json
 	 */
-	public function __construct(string $data, bool $json = false) {
+	public function __construct(string $data, bool $json = false, bool $decodeChunked = false) {
 		$this->data = $data;
+		$this->raw = $data;
 		$this->json = $json;
+		$this->decodeChunked = $decodeChunked;
 		$this->parse();
 	}
 
@@ -67,6 +73,19 @@ class Response {
 			if(!isset($this->headers["charset"])) $this->headers["charset"] = substr(strstr(strtok(";"), "="), 1);
 		}
 
+		// decode if chunked
+		if($this->decodeChunked && isset($this->headers["transfer-encoding"]) && strtolower($this->headers["transfer-encoding"]) == "chunked") {
+			for($decoded = ""; !empty($this->body); $this->body = trim($this->body)) {
+				$position = strpos($this->body, "\r\n");
+				$length = hexdec(substr($this->body, 0, $position));
+				$decoded .= substr($this->body, $position + 2, $length);
+				$this->body = substr($this->body, $position + 2 + $length);
+			}
+
+			$this->body = $decoded;
+			unset($decoded);
+		}
+
 		// parse body as json if in json mode
 		if($this->json && strtolower($this->headers["content-type"]) == "application/json") {
 			$json = json_decode($this->body);
@@ -75,6 +94,8 @@ class Response {
 
 		// cleanup
 		unset($this->data, $head, $lead);
+
+		
 	}
 
 	/**

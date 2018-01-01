@@ -2,3 +2,4 @@ reqc.phar
 vendor/
 .expected
 composer.lock
+build/request/hit

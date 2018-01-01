@@ -2,7 +2,6 @@
 
 namespace reqc\HTTP;
 
-use \reqc\HTTP\Transport\Curl;
 use \Exception;
 
 
@@ -28,6 +27,8 @@ class Request {
 	/** @var Response the response received from making the request **/
 	public $response;
 
+	private $transport = self::TRANSPORTS["CURL"];
+
 	/** @var array an array of required options **/
 	const REQUIRED_OPTIONS = [
 		"url"
@@ -42,7 +43,13 @@ class Request {
 		],
 		"handle-ratelimits" => true,
 		"max-attempts" => 5,
-		"json" => false
+		"json" => false,
+		"use-fsockopen" => false
+	];
+
+	const TRANSPORTS = [
+		"CURL" => "reqc\HTTP\Transport\Curl",
+		"FSOCKOPEN" => "reqc\HTTP\Transport\Fsockopen"
 	];
 
 	/**
@@ -52,6 +59,9 @@ class Request {
 	 */
 	public function __construct(array $options) {
 		$this->setupOptions($options);
+
+		// revert to fsockopen if curl not available
+		if(!class_exists($this->transport) || $this->options["use-fsockopen"]) $this->transport = self::TRANSPORTS["FSOCKOPEN"];
 
 		while(!$this->done) $this->execute();
 	}
@@ -72,7 +82,14 @@ class Request {
 		$this->options["headers"] = array_change_key_case($this->options["headers"]);
 		if($this->options["json"]) $this->options["headers"]["content-type"] = "application/json";
 
-		// adjust data value based on content-type if present
+		$this->setupData();
+		$this->setupAuthentication();
+	}
+
+	/**
+	 * Adjusts the data field based on content-type header, if present.
+	 */
+	private function setupData() {
 		if(isset($this->options["data"])) {
 			if(strtolower($this->options["headers"]["content-type"]) == "application/x-www-form-urlencoded") {
 				if(!is_array($this->options["data"])) throw new Exception("Expected array for data option when content type is application/x-www-form-urlencoded");
@@ -87,26 +104,45 @@ class Request {
 	}
 
 	/**
+	 * Setup HTTP Authentication, if the auth option is present.
+	 */
+	private function setupAuthentication() {
+		if(isset($this->options["auth"])) {
+			if(isset($this->options["auth"]["type"])) {
+				$this->options["auth"]["type"] = strtolower($this->options["auth"]["type"]);
+
+				// basic authentication
+				if($this->options["auth"]["type"] == "basic") {
+					$this->options["headers"]["authorization"] = "Basic ".base64_encode($this->options["auth"]["user"].":".$this->options["auth"]["pass"]);
+				}
+
+				// bearer authentication
+				if($this->options["auth"]["type"] == "bearer") {
+					$this->options["headers"]["authorization"] = "Bearer ".$this->options["auth"]["token"];
+				}
+			}
+		}
+	}
+
+	/**
 	 * Executes the Request.  This will repeat until the done property is
 	 * set to true.
 	 */
 	private function execute() {
 		$this->attempts++;
-		
-		$this->con = new Curl($this->options["url"]);
-		$this->con->setOpt(CURLOPT_CUSTOMREQUEST, $this->options["method"]);
-		$this->con->setOpt(CURLOPT_RETURNTRANSFER, true);
-		$this->con->setOpt(CURLOPT_HEADER, true);
-		$this->con->setOpt(CURLOPT_HTTPHEADER, $this->options["headers"]);
-		if(isset($this->options["data"])) $this->con->setOpt(CURLOPT_POSTFIELDS, $this->options["data"]);
+
+		$this->con = new $this->transport($this->options["url"]);
+		$this->con->setMethod($this->options["method"]);
+		$this->con->setHeaders($this->options["headers"]);
+		if(isset($this->options["data"])) $this->con->setBody($this->options["data"]);
 
 		// get response
-		$this->response = new Response($this->con->exec(), $this->options["json"]);
+		$this->response = new Response($this->con->exec(), $this->options["json"], ($this->transport == self::TRANSPORTS["CURL"]) ? false : true);
 		unset($this->con);
 
 		// retry if rate limited
 		if($this->options["handle-ratelimits"] &&
-		   ($this->attempts + 1) != $this->options["max-attempts"] &&
+		   $this->attempts != $this->options["max-attempts"] &&
 	       $this->response->code == 429) {
 			   sleep((Integer)$this->response->headers["retry-after"]);
 

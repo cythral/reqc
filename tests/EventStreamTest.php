@@ -4,13 +4,11 @@ use \PHPUnit\Framework\TestCase;
 use \reqc\EventStream\Server as EventStreamServer;
 use \reqc\HTTP\Request;
 
-// MUST USE OB_START OTHERWISE PHPUNIT WILL SKIP THE TEST
-
 class EventStreamTest extends TestCase {
 
     public function testNamedEvent() {
         $es = new EventStreamServer();
-
+        
         $this->expectOutputString("event:progress\ndata:10\n\n");
         $es->send("progress", 10);
     }
@@ -39,6 +37,7 @@ class EventStreamTest extends TestCase {
     public function testOutput() {
         $req = new Request([ "url" => "http://reqc/build/output/eventstream.php" ]);
         $resp = (String)$req->response;
+
         $events = explode("\n\n", $resp);
 
         $this->assertEquals("event:progress\ndata:{\"value\":10}", $events[0]);

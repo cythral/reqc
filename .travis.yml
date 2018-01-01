@@ -4,7 +4,7 @@ php:
 - '7.1'
 - '7.2'
 before_script:
- - composer install
+ - composer update
  - vendor/bin/box build
  - sudo apt-get update
  - sudo apt-get install apache2 libapache2-mod-fastcgi
@@ -20,16 +20,21 @@ before_script:
  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
  - sudo service apache2 restart
+ - mkdir ./tests/logs
+
 script:
- - phpunit
-after_success:
-  - wget https://raw.githubusercontent.com/snkrsnkampa/travis-ci-discord-webhook/master/send.sh
-  - chmod +x send.sh
-  - ./send.sh success
-after_failure:
-  - wget https://raw.githubusercontent.com/snkrsnkampa/travis-ci-discord-webhook/master/send.sh
-  - chmod +x send.sh
-  - ./send.sh failure
+ - phpunit --coverage-clover ./tests/logs/clover.xml
+
+after_script:
+ - php vendor/bin/php-coveralls -v
+ 
+notifications:
+  webhooks:
+    urls:
+     - http://api.phroses.com/travis
+    on_success: always
+    on_failure: always
+    
 addons:
   hosts:
     - reqc

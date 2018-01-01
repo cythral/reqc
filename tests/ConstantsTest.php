@@ -16,10 +16,8 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(200, $req->response->code);
 		$constants = json_decode($req->response->body, true);
 
-		$this->assertEquals(["*/*"], $constants["reqc\\ACCEPT"]);
 		$this->assertEquals(80, $constants["reqc\\PORT"]);
 		$this->assertEquals([], $constants["reqc\\VARS"]);
-		$this->assertEquals("127.0.0.1", $constants["reqc\\HOST"]);
 		$this->assertEquals("GET", $constants["reqc\\METHOD"]);
 		$this->assertEquals("127.0.0.1", $constants["reqc\\BASEURL"]);
 		$this->assertEquals("http://127.0.0.1/build/constants/http.php", $constants["reqc\\FULLURL"]);
@@ -47,10 +45,8 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(200, $req->response->code);
 		$constants = json_decode($req->response->body, true);
 
-		$this->assertEquals(["*/*"], $constants["reqc\\ACCEPT"]);
 		$this->assertEquals(80, $constants["reqc\\PORT"]);
 		$this->assertEquals([], $constants["reqc\\VARS"]);
-		$this->assertEquals("reqc", $constants["reqc\\HOST"]);
 		$this->assertEquals("GET", $constants["reqc\\METHOD"]);
 		$this->assertEquals("reqc", $constants["reqc\\BASEURL"]);
 		$this->assertEquals("http://reqc/build/constants/http.php", $constants["reqc\\FULLURL"]);
@@ -78,10 +74,8 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(200, $req->response->code);
 		$constants = json_decode($req->response->body, true);
 
-		$this->assertEquals(["*/*"], $constants["reqc\\ACCEPT"]);
 		$this->assertEquals(80, $constants["reqc\\PORT"]);
 		$this->assertEquals([], $constants["reqc\\VARS"]);
-		$this->assertEquals("sd1.reqc", $constants["reqc\\HOST"]);
 		$this->assertEquals("GET", $constants["reqc\\METHOD"]);
 		$this->assertEquals("sd1.reqc", $constants["reqc\\BASEURL"]);
 		$this->assertEquals("http://sd1.reqc/build/constants/http.php", $constants["reqc\\FULLURL"]);
@@ -109,10 +103,8 @@ class ConstantsTest extends TestCase {
 		$this->assertEquals(200, $req->response->code);
 		$constants = json_decode($req->response->body, true);
 
-		$this->assertEquals(["*/*"], $constants["reqc\\ACCEPT"]);
 		$this->assertEquals(80, $constants["reqc\\PORT"]);
 		$this->assertEquals([], $constants["reqc\\VARS"]);
-		$this->assertEquals("sd2.sd1.reqc", $constants["reqc\\HOST"]);
 		$this->assertEquals("GET", $constants["reqc\\METHOD"]);
 		$this->assertEquals("sd2.sd1.reqc", $constants["reqc\\BASEURL"]);
 		$this->assertEquals("http://sd2.sd1.reqc/build/constants/http.php", $constants["reqc\\FULLURL"]);

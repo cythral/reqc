@@ -6,13 +6,10 @@ use \reqc\HTTP\Response;
 
 class RequestTest extends TestCase {
 
-	public function testGetRequest() {
-
-		$req = new Request([
-			"url" => "http://reqc/build/request/get.php",
-			"method" => "GET"
-		]);
-
+	/**
+	 * @dataProvider providerGetRequest
+	 */
+	public function testGetRequest($req) {
 		$resp = $req->response;
 
 		$this->assertTrue($req->done);
@@ -24,15 +21,10 @@ class RequestTest extends TestCase {
 		$this->assertEquals("text/plain", $resp->headers["content-type"]);
 	}
 
-	public function testPostRequest() {
-		$req = new Request([
-			"url" => "http://reqc/build/request/post.php",
-			"method" => "POST",
-			"data" => [
-				"foo" => "bar"
-			]
-		]);
-
+	/**
+	 * @dataProvider providerPostRequest
+	 */
+	public function testPostRequest($req) {
 		$resp = $req->response;
 
 		$this->assertTrue($req->done);
@@ -43,26 +35,95 @@ class RequestTest extends TestCase {
 		$this->assertEquals("application/json", $resp->headers["content-type"]);
 	}
 
-	public function testJsonRequest() {
-		$req = new Request([
-			"url" => "http://reqc/build/request/json.php",
-			"method" => "POST",
-			"json" => true,
-			"data" => [
-				"foo" => "bar"
-			]
-		]);
-
+	/**
+	 * @dataProvider providerJsonRequest
+	 */
+	public function testJsonRequest($req) {
 		$resp = $req->response;
 		$body = $resp->body;
 		$expectedBody = new stdClass;
 		$expectedBody->foo = "bar";
-
+		
 		$this->assertTrue($req->done);
 		$this->assertEquals(1, $req->attempts);
 		$this->assertInstanceOf(Response::class, $resp);
 		$this->assertEquals(200, $resp->code);
 		$this->assertEquals($expectedBody, $body);
 		$this->assertEquals("application/json", $resp->headers["content-type"]);
+	}
+
+	/**
+	 * @dataProvider providerRateLimitedRequest
+	 */
+	public function testRateLimitedRequest($req) {
+		$this->assertTrue($req->done);
+		$this->assertEquals(2, $req->attempts);
+		$this->assertEquals("success", (String)$req);
+	}
+
+	/**
+	 * @dataProvider providerAuthentication
+	 */
+	public function testAuthentication($req, $expectsuccess) {
+		if($expectsuccess) {
+			$this->assertEquals("success", $req->response->body);
+		} else {
+			$this->assertEquals("invalid", $req->response->body);
+		}
+	}
+	
+	
+	public function providerGetRequest() {
+		$options = ["url" => "http://reqc/build/request/get.php"];
+		return [
+			[ new Request($options) ],
+			[ new Request($options + ["use-fsockopen" => true]) ]
+		];
+	}
+
+	public function providerPostRequest() {
+		$options = [
+			"url" => "http://reqc/build/request/post.php",
+			"method" => "POST",
+			"data" => [ "foo" => "bar" ]
+		];
+
+		return [
+			[ new Request($options) ],
+			[ new Request($options + ["use-fsockopen" => true]) ]
+		];
+	}
+
+	public function providerJsonRequest() {
+		$options = [
+			"url" => "http://reqc/build/request/json.php",
+			"method" => "POST",
+			"json" => true,
+			"data" => [ "foo" => "bar" ]
+		];
+
+		return [
+			[ new Request($options) ],
+			[ new Request($options + ["use-fsockopen" => true]) ]
+		];
+	}
+
+	public function providerRateLimitedRequest() {
+		$options = [ "url" => "http://reqc/build/request/ratelimited.php" ];
+		return [
+			[ new Request($options) ],
+			[ new Request($options + ["use-fsockopen" => true]) ]
+		];
+	}
+
+	public function providerAuthentication() {
+		$options = [ 
+			"url" => "http://reqc/build/request/authentication.php"
+		];
+
+		return [
+			[ new Request($options + ["auth" => [ "type" => "basic", "user" => "root", "pass" => "password" ]]), true ],
+			[ new Request($options + ["auth" => [ "type" => "basic", "user" => "root", "pass" => "passwordx" ]]), false ]
+		];
 	}
 }
