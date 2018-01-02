@@ -20,4 +20,10 @@ class Output {
     public function setContentType(string $contentType) {
         $this->setHeader("content-type", $contentType);
     }
+
+    public function redirect(string $location, int $code = 301) {
+        $this->setCode($code);
+        $this->setHeader("location", $location);
+        die;
+    }
 }
