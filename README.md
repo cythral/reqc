@@ -1,7 +1,7 @@
 # reqc [![Build Status](https://travis-ci.org/cythral/reqc.svg?branch=master)](https://travis-ci.org/cythral/reqc) [![Coverage Status](https://coveralls.io/repos/github/cythral/reqc/badge.svg)](https://coveralls.io/github/cythral/reqc) [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](https://github.com/cythral/reqc/blob/master/LICENSE) [![GitHub release](https://img.shields.io/github/release/cythral/reqc.svg)](https://github.com/cythral/reqc/releases/latest)
 **Request handling made easy in PHP**
 
-# This project is no longer maintained, use [Devisr HTTP](https://gitlab.com/devisr/http) instead
+## This project has been moved to Gitlab and is now called [Devisr HTTP](https://gitlab.com/devisr/http)
 ----
 
 **Request Controller (reqc)** is a php library for handling both  incoming and outgoing HTTP, REST, JSON, EventStream/SSE, and CLI requests.  An additional interface for WebSockets is to be added in a future release.  This library aims to make handling requests and responses as easy as possible.  If you would like a specific client, server or general feature added please feel free to request it in the [issues tab](https://github.com/cythral/reqc/issues) or open a pull request.
